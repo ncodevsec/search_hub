@@ -1,8 +1,7 @@
 const container = document.getElementById("search-sections");
 
 sections.forEach((section) => {
-	const col = document.createElement("div");
-	// col.className = "col-lg-6 mb-4";
+	const category = document.createElement("div");
 
 	const html = `
           <div class="card shadow-lg">
@@ -30,8 +29,8 @@ sections.forEach((section) => {
               </div>
           </div>`;
 
-	col.innerHTML = html;
-	container.appendChild(col);
+	category.innerHTML = html;
+	container.appendChild(category);
 });
 
 

@@ -13,7 +13,7 @@ const sections = [
 			},
 			{
 				name: "ChatGPT",
-				action: "https://chat.openai.com/?q=",
+				action: "https://chat.openai.com/",
 				param: "q",
 				icon: "https://chat.openai.com/favicon.ico",
 			},
@@ -91,7 +91,7 @@ const sections = [
 		forms: [
 			{
 				name: "Google Drive",
-				action: "https://drive.google.com/drive/search?q=",
+				action: "https://drive.google.com/drive/search",
 				param: "q",
 				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://drive.google.com/",
 			},
