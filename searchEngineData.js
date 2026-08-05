@@ -31,6 +31,36 @@ const sections = [
 		],
 	},
 	{
+		title: "AI Chatbots",
+		forms: [
+			{
+				name: "ChatGPT",
+				template: "https://chat.openai.com/?q={q}",
+				icon: "https://chat.openai.com/favicon.ico",
+			},
+			{
+				name: "Bing Chat",
+				template: "https://www.bing.com/search?q={q}",
+				icon: "https://www.bing.com/sa/simg/favicon-2x.ico",
+			},
+			{
+				name: "Perplexity",
+				template: "https://www.perplexity.ai/search?q={q}",
+				icon: "https://www.perplexity.ai/favicon.ico",
+			},
+			{
+				name: "You.com",
+				template: "https://you.com/search?q={q}",
+				icon: "https://you.com/favicon.ico",
+			},
+			{
+				name: "Claude",
+				template: "https://www.anthropic.com/claude?query={q}",
+				icon: "https://www.anthropic.com/favicon.ico",
+			},
+		],
+	},
+	{
 		title: "Privacy Search",
 		forms: [
 			{
@@ -102,6 +132,31 @@ const sections = [
 				name: "Pinterest",
 				template: "https://www.pinterest.com/search/pins/?q={q}",
 				icon: "https://www.google.com/s2/favicons?domain_url=https://www.pinterest.com",
+			},
+			{
+				name: "TikTok",
+				template: "https://www.tiktok.com/search?q={q}",
+				icon: "https://www.tiktok.com/favicon.ico",
+			},
+			{
+				name: "LinkedIn",
+				template: "https://www.linkedin.com/search/results/all/?keywords={q}",
+				icon: "https://www.linkedin.com/favicon.ico",
+			},
+			{
+				name: "Threads",
+				template: "https://www.threads.net/search?q={q}",
+				icon: "https://www.threads.net/favicon.ico",
+			},
+			{
+				name: "Mastodon",
+				template: "https://mastodon.social/search?q={q}",
+				icon: "https://mastodon.social/favicon.ico",
+			},
+			{
+				name: "Telegram",
+				template: "https://t.me/s/{q}",
+				icon: "https://telegram.org/favicon.ico",
 			},
 		],
 	},

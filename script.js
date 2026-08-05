@@ -3,6 +3,9 @@ const favoritesContainer = document.getElementById("favorite-services");
 const categoriesContainer = document.getElementById("service-categories");
 const storageKey = "searchHubPinnedServices";
 const defaultServiceKey = "searchHubDefaultServiceId";
+const themeStorageKey = "searchHubThemePreference";
+const defaultServiceIndicator = document.getElementById("default-service-indicator");
+const defaultServiceIcon = document.getElementById("default-service-icon");
 
 const allServices = (window.sections || sections).flatMap((section) =>
   section.forms.map((form) => ({
@@ -12,7 +15,7 @@ const allServices = (window.sections || sections).flatMap((section) =>
   }))
 );
 
-const defaultFavorites = ["Google", "DuckDuckGo", "YouTube", "ChatGPT", "Wikipedia"];
+const defaultFavorites = ["Google", "YouTube", "ChatGPT", "Google Drive"];
 
 const loadPinnedIds = () => {
   try {
@@ -52,9 +55,67 @@ const saveDefaultServiceId = (id) => {
   } catch { }
 };
 
+const saveThemePreference = (theme) => {
+  try {
+    localStorage.setItem(themeStorageKey, theme);
+  } catch { }
+};
+
+const loadThemePreference = () => {
+  try {
+    const stored = localStorage.getItem(themeStorageKey);
+    return stored === "light" || stored === "dark" || stored === "system" ? stored : "system";
+  } catch {
+    return "system";
+  }
+};
+
+const prefersDarkMode = () => {
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+};
+
+const applyThemePreference = (preference) => {
+  const isDark = preference === "dark" || (preference === "system" && prefersDarkMode());
+  document.body.classList.toggle("dark-theme", isDark);
+  document.body.classList.toggle("light-theme", !isDark);
+};
+
+const renderThemeSelection = () => {
+  const preference = loadThemePreference();
+  document.querySelectorAll('input[name="theme"]').forEach((radio) => {
+    const isChecked = radio.value === preference;
+    radio.checked = isChecked;
+    const parentLabel = radio.closest('label');
+    if (parentLabel) {
+      parentLabel.classList.toggle('selected-theme', isChecked);
+    }
+  });
+};
+
+const setThemePreference = (theme) => {
+  saveThemePreference(theme);
+  applyThemePreference(theme);
+  renderThemeSelection();
+};
+
+const watchSystemTheme = () => {
+  const query = window.matchMedia("(prefers-color-scheme: dark)");
+  const listener = () => {
+    if (loadThemePreference() === "system") {
+      applyThemePreference("system");
+    }
+  };
+  if (query.addEventListener) {
+    query.addEventListener("change", listener);
+  } else if (query.addListener) {
+    query.addListener(listener);
+  }
+};
+
 const setDefaultService = (serviceId) => {
   saveDefaultServiceId(serviceId);
   renderFavorites();
+  renderDefaultServiceIndicator();
 };
 
 const getDefaultServiceId = () => {
@@ -69,6 +130,31 @@ const getDefaultServiceId = () => {
 const getDefaultService = () => {
   const defaultId = getDefaultServiceId();
   return allServices.find((svc) => svc.id === defaultId) || allServices[0];
+};
+
+const renderDefaultServiceIndicator = () => {
+  if (!defaultServiceIndicator || !defaultServiceIcon) return;
+
+  const service = getDefaultService();
+  if (!service) {
+    defaultServiceIndicator.classList.add("hidden");
+    return;
+  }
+
+  defaultServiceIndicator.classList.remove("hidden");
+  defaultServiceIndicator.title = `Default search: ${service.name}`;
+  defaultServiceIndicator.setAttribute("aria-label", `Default search service: ${service.name}`);
+
+  defaultServiceIcon.src = service.icon;
+  defaultServiceIcon.alt = `${service.name} icon`;
+  defaultServiceIcon.onerror = () => {
+    try {
+      const fallbackUrl = new URL(service.template.replace("{q}", "x")).hostname;
+      defaultServiceIcon.src = `https://icons.duckduckgo.com/ip3/${fallbackUrl}.ico`;
+    } catch {
+      // keep original if fallback fails
+    }
+  };
 };
 
 const buildSearchUrl = (template, query) => template.replace("{q}", encodeURIComponent(query));
@@ -197,6 +283,7 @@ const renderFavorites = () => {
     }
     favoritesContainer.appendChild(favoriteBtn);
   });
+  renderDefaultServiceIndicator();
 };
 
 const renderCategories = () => {
@@ -252,7 +339,7 @@ const renderDefaultServicePicker = () => {
 
       const option = document.createElement("button");
       option.type = "button";
-      option.className = "modal-service-option w-full";
+      option.className = "modal-service-option";
       if (service.id === defaultId) {
         option.classList.add("selected");
       }
@@ -322,6 +409,27 @@ const setupModalListeners = () => {
     });
   }
 
+  document.querySelectorAll('input[name="theme"]').forEach((radio) => {
+    radio.addEventListener("change", (event) => {
+      if (event.target.checked) {
+        setThemePreference(event.target.value);
+      }
+    });
+  });
+
+  const resetBtn = document.getElementById('reset-theme-btn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      setThemePreference('system');
+      // keep modal open and refresh visuals
+    });
+  }
+
+  const closeActionBtn = document.getElementById('close-modal-action');
+  if (closeActionBtn) {
+    closeActionBtn.addEventListener('click', () => closeModal());
+  }
+
   // Close on Escape key
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
@@ -331,9 +439,21 @@ const setupModalListeners = () => {
 };
 
 const init = () => {
+  applyThemePreference(loadThemePreference());
+  renderThemeSelection();
+  watchSystemTheme();
   renderFavorites();
   renderCategories();
   setupModalListeners();
+
+  if (defaultServiceIndicator) {
+    defaultServiceIndicator.addEventListener("click", () => {
+      const defaultService = getDefaultService();
+      if (defaultService) {
+        openService(defaultService);
+      }
+    });
+  }
 
   if (globalInput) {
     globalInput.addEventListener("keydown", (event) => {

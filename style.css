@@ -61,6 +61,25 @@ body {
 	outline: none;
 	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
 }
+
+.search-input-wrapper {
+	position: relative;
+}
+.default-service-indicator {
+	border-color: #e2e8f0;
+	color: #64748b;
+}
+.default-service-indicator:hover {
+	color: #334155;
+	background: #f8fafc;
+}
+.default-service-indicator img {
+	display: block;
+	width: 1.2rem;
+	height: 1.2rem;
+	object-fit: contain;
+}
+
 /* Settings Button */
 .settings-button {
 	display: flex;
@@ -107,11 +126,11 @@ body {
 	z-index: 10;
 	background: white;
 	border-radius: 0.5rem;
-	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-	width: 90%;
-	max-width: 400px;
-	padding: 1.5rem;
-	max-height: 80vh;
+	box-shadow: 0 24px 40px -12px rgba(2, 6, 23, 0.35);
+	width: min(96%, 760px);
+	max-width: 760px;
+	padding: 1.25rem;
+	max-height: 90vh;
 	overflow-y: auto;
 }
 
@@ -132,7 +151,7 @@ body {
 	border-color: #cbd5e1;
 }
 .modal-service-option.selected {
-	background: #eef2ff;
+	background: #cde1ff;
 	border-color: #c7d2fe;
 	font-weight: 500;
 }
@@ -143,6 +162,31 @@ body {
 }
 .modal-service-category {
 	margin-bottom: 1.25rem;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.25rem 0;
+}
+
+.modal-service-option {
+	/* style as inline rounded chips like main page */
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.45rem 0.9rem;
+	border-radius: 9999px;
+	border: 1px solid #cbd5e1;
+	background: #f8fafc;
+	cursor: pointer;
+	transition:
+		transform 0.08s ease,
+		box-shadow 0.12s ease,
+		background 0.12s ease;
+}
+.modal-service-option:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 8px 18px rgba(2, 6, 23, 0.06);
 }
 .modal-service-category-title {
 	font-size: 0.75rem;
@@ -152,4 +196,139 @@ body {
 	letter-spacing: 0.05em;
 	margin-bottom: 0.5rem;
 	padding-left: 0.25rem;
+	width: 100%;
+}
+
+/* Theme option cards */
+#theme-settings {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+.theme-option {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.55rem 0.8rem;
+	border-radius: 9999px;
+	transition:
+		box-shadow 0.15s ease,
+		border-color 0.15s ease,
+		transform 0.08s ease;
+}
+.theme-option:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+}
+.theme-option input[type="radio"] {
+	flex: 0 0 auto;
+	margin: 0;
+}
+.theme-option.selected-theme {
+	border-color: #60a5fa !important;
+	box-shadow: 0 10px 30px rgba(37, 99, 235, 0.08);
+}
+
+.settings-footer button {
+	min-width: 96px;
+}
+
+.settings-footer button[disabled] {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+body.dark-theme {
+	background:
+		radial-gradient(circle at top, rgba(15, 23, 42, 0.24), transparent 28%),
+		linear-gradient(180deg, #000000 0%, #0d0d0d 100%);
+	color: #d1d5db;
+}
+
+body.dark-theme .bg-white,
+body.dark-theme .bg-slate-50,
+body.dark-theme .bg-slate-100,
+body.dark-theme .bg-slate-200 {
+	background-color: #0b0b0b !important;
+}
+
+body.dark-theme .text-slate-900,
+body.dark-theme .text-slate-700,
+body.dark-theme .text-slate-600,
+body.dark-theme .text-slate-500 {
+	color: #d1d5db !important;
+}
+
+body.dark-theme .border-slate-200,
+body.dark-theme .border-slate-300,
+body.dark-theme .border-slate-100,
+body.dark-theme .border-slate-50 {
+	border-color: #3a3a3a !important;
+}
+
+body.dark-theme .section-divider {
+	border-color: #2e2e2e !important;
+}
+
+body.dark-theme #global-search-input {
+	background-color: #000000 !important;
+	border-color: #6f6f6f !important;
+}
+
+body.dark-theme .settings-button {
+	color: #b0b0b0 !important;
+	background: #1a1a1a !important;
+	border-color: #3a3a3a !important;
+}
+
+body.dark-theme .settings-button:hover {
+	color: #e0e0e0 !important;
+	background: #2a2a2a !important;
+	border-color: #4a4a4a !important;
+}
+
+body.dark-theme .favorite-service,
+body.dark-theme .service-chip,
+body.dark-theme .modal-service-option {
+	background: #151515 !important;
+	border-color: #3a3a3a !important;
+	color: #d1d5db !important;
+}
+
+body.dark-theme .favorite-service:hover,
+body.dark-theme .service-chip button:hover,
+body.dark-theme .modal-service-option:hover {
+	background: #252525 !important;
+}
+
+body.dark-theme .modal-service-option.selected {
+	background: #3e3e3e !important;
+	border-color: #ffffff !important;
+}
+
+body.dark-theme .settings-modal-content {
+	background: #0d0d0d !important;
+	border-color: #3a3a3a !important;
+	color: #d1d5db !important;
+}
+
+body.dark-theme .settings-modal-content label,
+body.dark-theme .settings-modal-content .modal-service-category-title,
+body.dark-theme .settings-modal-content .text-slate-700,
+body.dark-theme .settings-modal-content .text-slate-500,
+body.dark-theme .settings-modal-content .text-slate-600 {
+	color: #b0b0b0 !important;
+}
+
+body.dark-theme input[type="radio"] {
+	accent-color: #60a5fa;
+}
+
+body.dark-theme .default-service-indicator {
+	background: #151515 !important;
+	border-color: #3a3a3a !important;
+	color: #d1d5db !important;
+}
+
+body.dark-theme .default-service-indicator:hover {
+	background: #252525 !important;
 }
