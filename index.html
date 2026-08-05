@@ -12,16 +12,15 @@
 
 <body class="bg-slate-50 text-slate-900 antialiased">
 	<main class="mx-auto max-w-4xl px-3 py-8 sm:px-4 lg:px-6">
-		<header class="mb-6 flex items-center justify-between gap-4">
+		<header class="mb-8 flex items-center justify-between gap-4 border-b border-slate-200 pb-6">
 			<div>
-				<h1 class="text-2xl font-bold text-slate-900">Search Hub</h1>
-				<p class="mt-1 text-sm text-slate-500">Find anything, anywhere</p>
+				<h1 class="text-2xl font-semibold text-slate-900">Search Hub</h1>
+				<p class="mt-1 text-xs text-slate-500 uppercase tracking-wide">Find anything, anywhere</p>
 			</div>
-			<div class="hidden sm:flex items-center text-sm text-slate-500">
-				<p>Fast Search • Multiple Engines • All in One</p>
-			</div>
-			<button id="settings-btn" class="settings-button ml-auto sm:ml-0" title="Settings">
-				<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+			<button id="settings-btn"
+				class="settings-button flex-shrink-0 text-slate-500 hover:text-slate-900 transition-colors"
+				title="Settings">
+				<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 						d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
 					</path>
@@ -65,6 +64,16 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Footer -->
+		<footer class="mt-12 border-t border-slate-200 pt-6 text-center text-xs text-slate-500">
+			<p>&copy; 2026 Search Hub. All rights reserved.</p>
+			<p class="mt-2">Developed by <a href="https://github.com/ncodevsec" target="_blank"
+					rel="noopener noreferrer"
+					class="text-slate-600 hover:text-slate-900 transition-colors font-medium">nCodevSec</a> • <a
+					href="https://github.com/ncodevsec/search_hub" target="_blank" rel="noopener noreferrer"
+					class="text-slate-600 hover:text-slate-900 transition-colors font-medium">GitHub</a></p>
+		</footer>
 	</main>
 
 	<script src="searchEngineData.js"></script>
