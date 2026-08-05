@@ -2,8 +2,7 @@ const sections = [
 	{
 		title: "Favourite Zone",
 		icon: "fa-star",
-		bg: "bg-primary",
-		color: "text-white",
+		headerClass: "bg-slate-900 text-white",
 		forms: [
 			{
 				name: "Google",
@@ -28,8 +27,7 @@ const sections = [
 	{
 		title: "Search Engines",
 		icon: "fa-search",
-		bg: "bg-success",
-		color: "text-white",
+		headerClass: "bg-slate-800 text-white",
 		forms: [
 			{
 				name: "Startpage",
@@ -54,8 +52,7 @@ const sections = [
 	{
 		title: "Social Medias",
 		icon: "fa-users",
-		bg: "bg-info",
-		color: "text-white",
+		headerClass: "bg-slate-700 text-white",
 		forms: [
 			{
 				name: "Facebook",
@@ -86,8 +83,7 @@ const sections = [
 	{
 		title: "Other Essentials",
 		icon: "fa-toolbox",
-		bg: "bg-warning",
-		color: "text-dark",
+		headerClass: "bg-slate-600 text-white",
 		forms: [
 			{
 				name: "Google Drive",
