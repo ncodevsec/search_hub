@@ -273,8 +273,8 @@ const renderFavorites = () => {
   favoritesContainer.innerHTML = "";
   const favorites = getFavoriteServices();
   const defaultId = getDefaultServiceId();
-  favorites.forEach((service, idx) => {
-    const favoriteBtn = createFavoriteButton(service, idx === 0);
+  favorites.forEach((service) => {
+    const favoriteBtn = createFavoriteButton(service, service.id === defaultId);
     if (service.id === defaultId) {
       favoriteBtn.classList.add("selected-default");
       favoriteBtn.title = `Default search: ${service.name}`;
