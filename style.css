@@ -35,7 +35,7 @@ body {
 	border-radius: 9999px;
 	border: 1px solid #cbd5e1;
 	background: #f8fafc;
-	padding: 0.15rem;
+	/* padding: 0.15rem; */
 }
 .service-chip button {
 	border: none;
@@ -222,10 +222,6 @@ body {
 	transform: translateY(-1px);
 	box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
 }
-.theme-option input[type="radio"] {
-	flex: 0 0 auto;
-	margin: 0;
-}
 .theme-option.selected-theme {
 	background: #0066ff;
 	color: #ffffff;
@@ -234,13 +230,16 @@ body {
 
 #reset-theme-btn {
 	border-radius: 9999px;
-	border-color: #fecaca;
 	background-color: #ff000042;
-	color: #ff0000;
+	color: #000000;
 }
 
 #reset-theme-btn:hover {
-	background-color: #fecaca;
+	background-color: #ff9393;
+}
+
+body.dark-theme #reset-theme-btn:hover {
+	background-color: #7a0404;
 }
 
 .settings-footer button {
