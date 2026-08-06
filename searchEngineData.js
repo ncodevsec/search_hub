@@ -101,6 +101,66 @@ const sections = [
 		],
 	},
 	{
+		title: "Social",
+		forms: [
+			{
+				name: "YouTube",
+				template: "https://www.youtube.com/results?search_query={q}",
+				icon: "https://www.youtube.com/favicon.ico",
+			},
+			{
+				name: "Twitter (X)",
+				template: "https://x.com/search?q={q}",
+				icon: "https://abs.twimg.com/favicons/twitter.3.ico",
+			},
+			{
+				name: "Facebook",
+				template: "https://www.facebook.com/search/top/?q={q}",
+				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=//www.facebook.com",
+			},
+			{
+				name: "Instagram",
+				template: "https://www.instagram.com/explore/tags/{q}/",
+				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=//www.instagram.com",
+			},
+			{
+				name: "Reddit",
+				template: "https://www.reddit.com/search/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.reddit.com",
+			},
+			{
+				name: "Pinterest",
+				template: "https://www.pinterest.com/search/pins/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.pinterest.com",
+			},
+			{
+				name: "TikTok",
+				template: "https://www.tiktok.com/search?q={q}",
+				icon: "https://www.tiktok.com/favicon.ico",
+			},
+			{
+				name: "LinkedIn",
+				template: "https://www.linkedin.com/search/results/all/?keywords={q}",
+				icon: "https://www.linkedin.com/favicon.ico",
+			},
+			{
+				name: "Threads",
+				template: "https://www.threads.net/search?q={q}",
+				icon: "https://www.threads.net/favicon.ico",
+			},
+			{
+				name: "Mastodon",
+				template: "https://mastodon.social/search?q={q}",
+				icon: "https://mastodon.social/favicon.ico",
+			},
+			{
+				name: "Telegram",
+				template: "https://t.me/s/{q}",
+				icon: "https://telegram.org/favicon.ico",
+			},
+		],
+	},
+	{
 		title: "Privacy Search",
 		forms: [
 			{
@@ -192,66 +252,6 @@ const sections = [
 				name: "Notion",
 				template: "https://www.notion.so/search?q={q}",
 				icon: "https://www.notion.so/icons/icon-48x48.png",
-			},
-		],
-	},
-	{
-		title: "Social",
-		forms: [
-			{
-				name: "YouTube",
-				template: "https://www.youtube.com/results?search_query={q}",
-				icon: "https://www.youtube.com/favicon.ico",
-			},
-			{
-				name: "Twitter (X)",
-				template: "https://x.com/search?q={q}",
-				icon: "https://abs.twimg.com/favicons/twitter.3.ico",
-			},
-			{
-				name: "Facebook",
-				template: "https://www.facebook.com/search/top/?q={q}",
-				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=//www.facebook.com",
-			},
-			{
-				name: "Instagram",
-				template: "https://www.instagram.com/explore/tags/{q}/",
-				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=//www.instagram.com",
-			},
-			{
-				name: "Reddit",
-				template: "https://www.reddit.com/search/?q={q}",
-				icon: "https://www.google.com/s2/favicons?domain_url=https://www.reddit.com",
-			},
-			{
-				name: "Pinterest",
-				template: "https://www.pinterest.com/search/pins/?q={q}",
-				icon: "https://www.google.com/s2/favicons?domain_url=https://www.pinterest.com",
-			},
-			{
-				name: "TikTok",
-				template: "https://www.tiktok.com/search?q={q}",
-				icon: "https://www.tiktok.com/favicon.ico",
-			},
-			{
-				name: "LinkedIn",
-				template: "https://www.linkedin.com/search/results/all/?keywords={q}",
-				icon: "https://www.linkedin.com/favicon.ico",
-			},
-			{
-				name: "Threads",
-				template: "https://www.threads.net/search?q={q}",
-				icon: "https://www.threads.net/favicon.ico",
-			},
-			{
-				name: "Mastodon",
-				template: "https://mastodon.social/search?q={q}",
-				icon: "https://mastodon.social/favicon.ico",
-			},
-			{
-				name: "Telegram",
-				template: "https://t.me/s/{q}",
-				icon: "https://telegram.org/favicon.ico",
 			},
 		],
 	},
