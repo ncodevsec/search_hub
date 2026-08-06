@@ -82,13 +82,9 @@ const applyThemePreference = (preference) => {
 
 const renderThemeSelection = () => {
   const preference = loadThemePreference();
-  document.querySelectorAll('input[name="theme"]').forEach((radio) => {
-    const isChecked = radio.value === preference;
-    radio.checked = isChecked;
-    const parentLabel = radio.closest('label');
-    if (parentLabel) {
-      parentLabel.classList.toggle('selected-theme', isChecked);
-    }
+  document.querySelectorAll('button[data-theme]').forEach((btn) => {
+    const isSelected = btn.dataset.theme === preference;
+    btn.classList.toggle('selected-theme', isSelected);
   });
 };
 
@@ -116,6 +112,7 @@ const setDefaultService = (serviceId) => {
   saveDefaultServiceId(serviceId);
   renderFavorites();
   renderDefaultServiceIndicator();
+  renderDefaultServicePicker();
 };
 
 const getDefaultServiceId = () => {
@@ -358,7 +355,6 @@ const renderDefaultServicePicker = () => {
       option.appendChild(label);
       option.addEventListener("click", () => {
         setDefaultService(service.id);
-        closeModal();
       });
 
       categoryDiv.appendChild(option);
@@ -409,11 +405,9 @@ const setupModalListeners = () => {
     });
   }
 
-  document.querySelectorAll('input[name="theme"]').forEach((radio) => {
-    radio.addEventListener("change", (event) => {
-      if (event.target.checked) {
-        setThemePreference(event.target.value);
-      }
+  document.querySelectorAll('button[data-theme]').forEach((btn) => {
+    btn.addEventListener('click', (event) => {
+      setThemePreference(btn.dataset.theme);
     });
   });
 
@@ -423,11 +417,6 @@ const setupModalListeners = () => {
       setThemePreference('system');
       // keep modal open and refresh visuals
     });
-  }
-
-  const closeActionBtn = document.getElementById('close-modal-action');
-  if (closeActionBtn) {
-    closeActionBtn.addEventListener('click', () => closeModal());
   }
 
   // Close on Escape key
