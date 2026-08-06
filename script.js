@@ -4,6 +4,7 @@ const categoriesContainer = document.getElementById("service-categories");
 const storageKey = "searchHubPinnedServices";
 const defaultServiceKey = "searchHubDefaultServiceId";
 const themeStorageKey = "searchHubThemePreference";
+const layoutStorageKey = "searchHubLayoutPreference";
 const defaultServiceIndicator = document.getElementById("default-service-indicator");
 const defaultServiceIcon = document.getElementById("default-service-icon");
 
@@ -181,7 +182,7 @@ const togglePin = (serviceId) => {
 const createFavoriteButton = (service, isDefault) => {
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.className = "favorite-service inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300";
+  btn.className = "favorite-service inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 text-sm hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-300";
   if (isDefault) {
     btn.classList.add("default-service");
   }
@@ -211,11 +212,11 @@ const createFavoriteButton = (service, isDefault) => {
 
 const createCategoryChip = (service) => {
   const chip = document.createElement("div");
-  chip.className = "service-chip inline-flex items-center rounded-full border border-slate-200 bg-slate-50";
+  chip.className = "service-chip inline-flex justify-between items-center rounded-full border border-slate-200";
 
   const button = document.createElement("button");
   button.type = "button";
-  button.className = "flex items-center gap-2 rounded-full px-2 py-1.5 text-sm text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300";
+  button.className = "flex items-center gap-2 rounded-full px-2 py-2 text-sm hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-300";
   button.addEventListener("click", () => openService(service));
 
   const img = document.createElement("img");
@@ -239,7 +240,7 @@ const createCategoryChip = (service) => {
 
   const pinButton = document.createElement("button");
   pinButton.type = "button";
-  pinButton.className = "pin-toggle inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-200 hover:text-slate-900";
+  pinButton.className = "pin-toggle inline-flex h-9 w-9 items-center justify-center rounded-full transition hover:bg-slate-300";
   pinButton.innerHTML = isPinned(service.id)
     ? `
 			<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -285,23 +286,19 @@ const renderFavorites = () => {
 
 const renderCategories = () => {
   categoriesContainer.innerHTML = "";
-  (window.sections || sections).forEach((section, idx) => {
-    if (idx > 0) {
-      const line = document.createElement("hr");
-      line.className = "section-divider";
-      categoriesContainer.appendChild(line);
-    }
+  const layout = getLayoutPreference();
 
+  (window.sections || sections).forEach((section, idx) => {
     const categorySection = document.createElement("div");
-    categorySection.className = "space-y-3";
+    categorySection.className = "space-y-2 bg-white shadow-sm border border-slate-200 rounded-3xl px-2 py-2";
 
     const categoryTitle = document.createElement("h2");
-    categoryTitle.className = "text-sm font-semibold text-slate-900";
+    categoryTitle.className = "text-md font-semibold text-center p-2";
     categoryTitle.textContent = section.title;
     categorySection.appendChild(categoryTitle);
 
     const categoryRow = document.createElement("div");
-    categoryRow.className = "mt-1 flex flex-wrap gap-2";
+    categoryRow.className = layout === "horizontal" ? "flex flex-wrap gap-2 justify-center" : "flex flex-col gap-2";
     section.forms.forEach((form) => {
       const service = allServices.find((svc) => svc.id === `${section.title}:${form.name}`);
       if (service) {
@@ -312,6 +309,41 @@ const renderCategories = () => {
     categorySection.appendChild(categoryRow);
     categoriesContainer.appendChild(categorySection);
   });
+};
+
+const getLayoutPreference = () => {
+  try {
+    const stored = localStorage.getItem(layoutStorageKey);
+    return stored === "horizontal" || stored === "vertical" ? stored : "vertical";
+  } catch {
+    return "vertical";
+  }
+};
+
+const saveLayoutPreference = (layout) => {
+  try {
+    localStorage.setItem(layoutStorageKey, layout);
+  } catch { }
+};
+
+const setLayoutPreference = (layout) => {
+  saveLayoutPreference(layout);
+  applyLayoutPreference(layout);
+};
+
+const applyLayoutPreference = (layout) => {
+  if (layout === "horizontal") {
+    categoriesContainer.className = "space-y-4 overflow-x-hidden";
+  } else {
+    categoriesContainer.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-x-hidden";
+  }
+  renderCategories();
+};
+
+const toggleLayoutView = () => {
+  const currentLayout = getLayoutPreference();
+  const newLayout = currentLayout === "vertical" ? "horizontal" : "vertical";
+  setLayoutPreference(newLayout);
 };
 
 const renderDefaultServicePicker = () => {
@@ -336,7 +368,7 @@ const renderDefaultServicePicker = () => {
 
       const option = document.createElement("button");
       option.type = "button";
-      option.className = "modal-service-option";
+      option.className = "modal-service-option border border-slate-200 rounded-full";
       if (service.id === defaultId) {
         option.classList.add("selected");
       }
@@ -419,6 +451,11 @@ const setupModalListeners = () => {
     });
   }
 
+  const layoutToggleBtn = document.getElementById('layout-toggle-btn');
+  if (layoutToggleBtn) {
+    layoutToggleBtn.addEventListener('click', toggleLayoutView);
+  }
+
   // Close on Escape key
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
@@ -431,8 +468,8 @@ const init = () => {
   applyThemePreference(loadThemePreference());
   renderThemeSelection();
   watchSystemTheme();
+  applyLayoutPreference(getLayoutPreference());
   renderFavorites();
-  renderCategories();
   setupModalListeners();
 
   if (defaultServiceIndicator) {

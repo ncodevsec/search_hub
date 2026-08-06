@@ -89,7 +89,7 @@ const sections = [
 				icon: "https://www.google.com/s2/favicons?domain_url=https://gemini.google.com",
 			},
 			{
-				name: "Microsoft Copilot",
+				name: "MS Copilot",
 				template: "https://copilot.microsoft.com/?q={q}",
 				icon: "https://www.google.com/s2/favicons?domain_url=https://copilot.microsoft.com",
 			},
