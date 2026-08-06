@@ -151,9 +151,9 @@ body {
 	border-color: #cbd5e1;
 }
 .modal-service-option.selected {
-	background: #cde1ff;
-	border-color: #c7d2fe;
-	font-weight: 500;
+	background: #0066ff;
+    color: #ffffff;
+    font-weight: 500;
 }
 .modal-service-option img {
 	width: 1.25rem;
@@ -307,8 +307,8 @@ body.dark-theme .modal-service-option:hover {
 }
 
 body.dark-theme .modal-service-option.selected {
-	background: #242424 !important;
-	border-color: #4a4a4a !important;
+	background: #005f8f !important;
+    /* border-color: #ffffff !important; */
 }
 
 body.dark-theme .settings-modal-content {

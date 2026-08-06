@@ -28,6 +28,31 @@ const sections = [
 				template: "https://www.baidu.com/s?wd={q}",
 				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://www.baidu.com",
 			},
+			{
+				name: "Yandex",
+				template: "https://yandex.com/search/?text={q}",
+				icon: "https://yandex.com/favicon.ico",
+			},
+			{
+				name: "Naver",
+				template: "https://search.naver.com/search.naver?query={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://search.naver.com",
+			},
+			{
+				name: "Sogou",
+				template: "https://www.sogou.com/web?query={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.sogou.com",
+			},
+			{
+				name: "Ask",
+				template: "https://www.ask.com/web?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.ask.com",
+			},
+			{
+				name: "AOL",
+				template: "https://search.aol.com/aol/search?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://search.aol.com",
+			},
 		],
 	},
 	{
@@ -58,6 +83,21 @@ const sections = [
 				template: "https://www.anthropic.com/claude?query={q}",
 				icon: "https://www.anthropic.com/favicon.ico",
 			},
+			{
+				name: "Gemini",
+				template: "https://gemini.google.com/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://gemini.google.com",
+			},
+			{
+				name: "Microsoft Copilot",
+				template: "https://copilot.microsoft.com/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://copilot.microsoft.com",
+			},
+			{
+				name: "DeepSeek",
+				template: "https://chat.deepseek.com/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://chat.deepseek.com",
+			},
 		],
 	},
 	{
@@ -83,6 +123,51 @@ const sections = [
 				template: "https://www.qwant.com/?q={q}",
 				icon: "https://icons.duckduckgo.com/ip3/qwant.com.ico",
 			},
+			{
+				name: "Mojeek",
+				template: "https://www.mojeek.com/search?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.mojeek.com",
+			},
+			{
+				name: "Swisscows",
+				template: "https://swisscows.com/web?query={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://swisscows.com",
+			},
+			{
+				name: "Searx",
+				template: "https://www.searx.space/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.searx.space",
+			},
+		],
+	},
+	{
+		title: "Images & Media",
+		forms: [
+			{
+				name: "Google Images",
+				template: "https://www.google.com/search?tbm=isch&q={q}",
+				icon: "https://www.google.com/favicon.ico",
+			},
+			{
+				name: "Bing Images",
+				template: "https://www.bing.com/images/search?q={q}",
+				icon: "https://www.bing.com/sa/simg/favicon-2x.ico",
+			},
+			{
+				name: "Unsplash",
+				template: "https://unsplash.com/s/photos/{q}",
+				icon: "https://unsplash.com/favicon.ico",
+			},
+			{
+				name: "Flickr",
+				template: "https://www.flickr.com/search/?text={q}",
+				icon: "https://www.flickr.com/favicon.ico",
+			},
+			{
+				name: "Wikimedia Commons",
+				template: "https://commons.wikimedia.org/wiki/Special:Search?search={q}",
+				icon: "https://commons.wikimedia.org/static/favicon/wikipedia.ico",
+			},
 		],
 	},
 	{
@@ -97,6 +182,16 @@ const sections = [
 				name: "OneDrive",
 				template: "https://onedrive.live.com/search?q={q}",
 				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://onedrive.live.com",
+			},
+			{
+				name: "Dropbox",
+				template: "https://www.dropbox.com/search?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.dropbox.com",
+			},
+			{
+				name: "Notion",
+				template: "https://www.notion.so/search?q={q}",
+				icon: "https://www.notion.so/icons/icon-48x48.png",
 			},
 		],
 	},
@@ -178,6 +273,16 @@ const sections = [
 				template: "https://www.walmart.com/search?q={q}",
 				icon: "https://www.google.com/s2/favicons?domain_url=https://www.walmart.com",
 			},
+			{
+				name: "Etsy",
+				template: "https://www.etsy.com/search?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.etsy.com",
+			},
+			{
+				name: "AliExpress",
+				template: "https://www.aliexpress.com/wholesale?SearchText={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.aliexpress.com",
+			},
 		],
 	},
 	{
@@ -207,6 +312,21 @@ const sections = [
 				name: "Google Scholar",
 				template: "https://scholar.google.com/scholar?q={q}",
 				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=scholar.google.com",
+			},
+			{
+				name: "WolframAlpha",
+				template: "https://www.wolframalpha.com/input/?i={q}",
+				icon: "https://www.wolframalpha.com/favicon.ico",
+			},
+			{
+				name: "OpenStreetMap",
+				template: "https://www.openstreetmap.org/search?query={q}",
+				icon: "https://www.openstreetmap.org/favicon.ico",
+			},
+			{
+				name: "IMDb",
+				template: "https://www.imdb.com/find/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.imdb.com",
 			},
 		],
 	},

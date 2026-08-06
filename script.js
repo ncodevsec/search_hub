@@ -143,7 +143,7 @@ const renderDefaultServiceIndicator = () => {
 
   defaultServiceIndicator.classList.remove("hidden");
   defaultServiceIndicator.title = `Default search: ${service.name}`;
-  defaultServiceIndicator.setAttribute("aria-label", `Default search service: ${service.name}`);
+  defaultServiceIndicator.setAttribute("aria-label", `Default search engine: ${service.name}`);
 
   defaultServiceIcon.src = service.icon;
   defaultServiceIcon.alt = `${service.name} icon`;
