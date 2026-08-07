@@ -14,7 +14,92 @@ const todoInput = document.getElementById("todo-input");
 const todoListElement = document.getElementById("todo-list");
 const todoEmptyMessage = document.getElementById("todo-empty");
 const todoStorageKey = "searchHubTodoItems";
+const calendarMonthLabel = document.getElementById("calendar-month-label");
+const calendarWeekdaysElement = document.getElementById("calendar-weekdays");
+const calendarDaysElement = document.getElementById("calendar-days");
+const calendarPrevBtn = document.getElementById("calendar-prev-btn");
+const calendarNextBtn = document.getElementById("calendar-next-btn");
+let calendarViewDate = new Date();
 const iconPlaceholder = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" fill="%23e2e8f0"/><circle cx="12" cy="12" r="8" fill="%23cbd5e1"/></svg>');
+
+const weekdayShortNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+const isSameDay = (dateA, dateB) => {
+  return dateA.getFullYear() === dateB.getFullYear()
+    && dateA.getMonth() === dateB.getMonth()
+    && dateA.getDate() === dateB.getDate();
+};
+
+const renderCalendar = () => {
+  if (!calendarMonthLabel || !calendarWeekdaysElement || !calendarDaysElement) return;
+
+  const year = calendarViewDate.getFullYear();
+  const month = calendarViewDate.getMonth();
+  const today = new Date();
+
+  calendarMonthLabel.textContent = `${monthNames[month]} ${year}`;
+
+  calendarWeekdaysElement.innerHTML = "";
+  weekdayShortNames.forEach((day) => {
+    const weekday = document.createElement("div");
+    weekday.className = "text-center text-[10px] uppercase tracking-[0.24em] text-slate-400";
+    weekday.textContent = day;
+    calendarWeekdaysElement.appendChild(weekday);
+  });
+
+  const firstDay = new Date(year, month, 1);
+  const dayOfWeek = (firstDay.getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPreviousMonth = new Date(year, month, 0).getDate();
+  const totalCells = Math.ceil((dayOfWeek + daysInMonth) / 7) * 7;
+
+  calendarDaysElement.innerHTML = "";
+
+  for (let index = 0; index < totalCells; index += 1) {
+    const dayOffset = index - dayOfWeek + 1;
+    let date;
+    let label;
+    let isCurrentMonth = true;
+
+    if (dayOffset <= 0) {
+      date = new Date(year, month - 1, daysInPreviousMonth + dayOffset);
+      label = daysInPreviousMonth + dayOffset;
+      isCurrentMonth = false;
+    } else if (dayOffset > daysInMonth) {
+      date = new Date(year, month + 1, dayOffset - daysInMonth);
+      label = dayOffset - daysInMonth;
+      isCurrentMonth = false;
+    } else {
+      date = new Date(year, month, dayOffset);
+      label = dayOffset;
+    }
+
+    const dayButton = document.createElement("button");
+    dayButton.type = "button";
+    dayButton.className = `calendar-day flex h-8 w-full items-center justify-center rounded-full text-sm transition ${isCurrentMonth ? "text-slate-700" : "calendar-day--muted text-slate-400"}`;
+    if (isSameDay(date, today)) {
+      dayButton.classList.add("calendar-day--today", "text-slate-900", "font-semibold");
+    }
+    dayButton.textContent = label;
+    calendarDaysElement.appendChild(dayButton);
+  }
+};
+
+const changeCalendarMonth = (offset) => {
+  calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() + offset, 1);
+  renderCalendar();
+};
+
+const setupCalendarListeners = () => {
+  if (calendarPrevBtn) {
+    calendarPrevBtn.addEventListener("click", () => changeCalendarMonth(-1));
+  }
+
+  if (calendarNextBtn) {
+    calendarNextBtn.addEventListener("click", () => changeCalendarMonth(1));
+  }
+};
 
 const getIconCandidates = (service) => {
   const candidates = [];
@@ -727,7 +812,9 @@ const init = () => {
   renderFavorites();
   setupModalListeners();
   setupTodoListeners();
+  setupCalendarListeners();
   renderTodoList();
+  renderCalendar();
   updateClock();
   setInterval(updateClock, 1000);
 
