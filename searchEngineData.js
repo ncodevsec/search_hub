@@ -9,14 +9,14 @@ const sections = [
 				icon: "https://www.google.com/favicon.ico",
 			},
 			{
-				name: "Yahoo",
-				template: "https://search.yahoo.com/search?p={q}",
-				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://search.yahoo.com",
-			},
-			{
 				name: "Bing",
 				template: "https://www.bing.com/search?q={q}",
 				icon: "https://www.bing.com/sa/simg/favicon-2x.ico",
+			},
+			{
+				name: "Yahoo",
+				template: "https://search.yahoo.com/search?p={q}",
+				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://search.yahoo.com",
 			},
 			{
 				name: "Ecosia",
@@ -64,9 +64,19 @@ const sections = [
 				icon: "https://chat.openai.com/favicon.ico",
 			},
 			{
-				name: "Bing Chat",
-				template: "https://www.bing.com/search?q={q}",
-				icon: "https://www.bing.com/sa/simg/favicon-2x.ico",
+				name: "Gemini",
+				template: "https://gemini.google.com/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://gemini.google.com",
+			},
+			{
+				name: "Claude",
+				template: "https://www.anthropic.com/claude?query={q}",
+				icon: "https://www.anthropic.com/favicon.ico",
+			},
+			{
+				name: "Microsoft Copilot",
+				template: "https://copilot.microsoft.com/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://copilot.microsoft.com",
 			},
 			{
 				name: "Perplexity",
@@ -79,24 +89,14 @@ const sections = [
 				icon: "https://you.com/favicon.ico",
 			},
 			{
-				name: "Claude",
-				template: "https://www.anthropic.com/claude?query={q}",
-				icon: "https://www.anthropic.com/favicon.ico",
-			},
-			{
-				name: "Gemini",
-				template: "https://gemini.google.com/?q={q}",
-				icon: "https://www.google.com/s2/favicons?domain_url=https://gemini.google.com",
-			},
-			{
-				name: "Microsoft Copilot",
-				template: "https://copilot.microsoft.com/?q={q}",
-				icon: "https://www.google.com/s2/favicons?domain_url=https://copilot.microsoft.com",
-			},
-			{
 				name: "DeepSeek",
 				template: "https://chat.deepseek.com/?q={q}",
 				icon: "https://www.google.com/s2/favicons?domain_url=https://chat.deepseek.com",
+			},
+			{
+				name: "Bing Chat",
+				template: "https://www.bing.com/search?q={q}",
+				icon: "https://www.bing.com/sa/simg/favicon-2x.ico",
 			},
 		],
 	},
@@ -107,11 +107,6 @@ const sections = [
 				name: "YouTube",
 				template: "https://www.youtube.com/results?search_query={q}",
 				icon: "https://www.youtube.com/favicon.ico",
-			},
-			{
-				name: "Twitter (X)",
-				template: "https://x.com/search?q={q}",
-				icon: "https://abs.twimg.com/favicons/twitter.3.ico",
 			},
 			{
 				name: "Facebook",
@@ -129,19 +124,24 @@ const sections = [
 				icon: "https://www.google.com/s2/favicons?domain_url=https://www.reddit.com",
 			},
 			{
-				name: "Pinterest",
-				template: "https://www.pinterest.com/search/pins/?q={q}",
-				icon: "https://www.google.com/s2/favicons?domain_url=https://www.pinterest.com",
-			},
-			{
 				name: "TikTok",
 				template: "https://www.tiktok.com/search?q={q}",
 				icon: "https://www.tiktok.com/favicon.ico",
 			},
 			{
+				name: "Twitter (X)",
+				template: "https://x.com/search?q={q}",
+				icon: "https://abs.twimg.com/favicons/twitter.3.ico",
+			},
+			{
 				name: "LinkedIn",
 				template: "https://www.linkedin.com/search/results/all/?keywords={q}",
 				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://www.linkedin.com",
+			},
+			{
+				name: "Pinterest",
+				template: "https://www.pinterest.com/search/pins/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.pinterest.com",
 			},
 			{
 				name: "Threads",
@@ -184,6 +184,11 @@ const sections = [
 				icon: "https://icons.duckduckgo.com/ip3/qwant.com.ico",
 			},
 			{
+				name: "Searx",
+				template: "https://www.searx.space/?q={q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://www.searx.space",
+			},
+			{
 				name: "Mojeek",
 				template: "https://www.mojeek.com/search?q={q}",
 				icon: "https://www.google.com/s2/favicons?domain_url=https://www.mojeek.com",
@@ -192,11 +197,6 @@ const sections = [
 				name: "Swisscows",
 				template: "https://swisscows.com/web?query={q}",
 				icon: "https://www.google.com/s2/favicons?domain_url=https://swisscows.com",
-			},
-			{
-				name: "Searx",
-				template: "https://www.searx.space/?q={q}",
-				icon: "https://www.google.com/s2/favicons?domain_url=https://www.searx.space",
 			},
 		],
 	},
@@ -294,6 +294,11 @@ const sections = [
 				icon: "https://www.google.com/s2/favicons?domain_url=https://www.wikipedia.org",
 			},
 			{
+				name: "Google Maps",
+				template: "https://www.google.com/maps/search/{q}",
+				icon: "https://www.google.com/s2/favicons?domain_url=https://maps.google.com",
+			},
+			{
 				name: "GitHub",
 				template: "https://github.com/search?q={q}",
 				icon: "https://www.google.com/s2/favicons?domain_url=https://github.com",
@@ -302,11 +307,6 @@ const sections = [
 				name: "Stack Overflow",
 				template: "https://stackoverflow.com/search?q={q}",
 				icon: "https://www.google.com/s2/favicons?domain_url=https://stackoverflow.com",
-			},
-			{
-				name: "Google Maps",
-				template: "https://www.google.com/maps/search/{q}",
-				icon: "https://www.google.com/s2/favicons?domain_url=https://maps.google.com",
 			},
 			{
 				name: "Google Scholar",
@@ -319,18 +319,20 @@ const sections = [
 				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://www.wolframalpha.com",
 			},
 			{
-				name: "Open Street Map",
-				template: "https://www.openstreetmap.org/search?query={q}",
-				icon: "https://www.openstreetmap.org/favicon.ico",
-			},
-			{
 				name: "IMDb",
 				template: "https://www.imdb.com/find/?q={q}",
 				icon: "https://www.google.com/s2/favicons?domain_url=https://www.imdb.com",
+			},
+			{
+				name: "Open Street Map",
+				template: "https://www.openstreetmap.org/search?query={q}",
+				icon: "https://www.openstreetmap.org/favicon.ico",
 			},
 		],
 	},
 ];
 
 // Expose `sections` to the global scope for the renderer
-window.sections = sections;
+if (typeof window !== "undefined") {
+	window.sections = sections;
+}

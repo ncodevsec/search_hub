@@ -520,7 +520,7 @@ const renderCategories = () => {
       // Create toggle button
       const toggleButton = document.createElement("button");
       toggleButton.type = "button";
-      toggleButton.className = "category-toggle-btn w-full px-3 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-full border border-slate-200 transition-all flex items-center justify-center gap-2";
+      toggleButton.className = "category-toggle-btn w-full px-3 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-full border border-slate-200 transition-all flex items-center justify-center gap-2 border-dashed";
       toggleButton.setAttribute("aria-expanded", "false");
       toggleButton.setAttribute("data-category", idx);
 
