@@ -7,6 +7,83 @@ const themeStorageKey = "searchHubThemePreference";
 const layoutStorageKey = "searchHubLayoutPreference";
 const defaultServiceIndicator = document.getElementById("default-service-indicator");
 const defaultServiceIcon = document.getElementById("default-service-icon");
+const clockElement = document.getElementById("digital-clock");
+const clockDescription = document.getElementById("clock-description");
+const todoForm = document.getElementById("todo-form");
+const todoInput = document.getElementById("todo-input");
+const todoListElement = document.getElementById("todo-list");
+const todoEmptyMessage = document.getElementById("todo-empty");
+const todoStorageKey = "searchHubTodoItems";
+const iconPlaceholder = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" fill="%23e2e8f0"/><circle cx="12" cy="12" r="8" fill="%23cbd5e1"/></svg>');
+
+const getIconCandidates = (service) => {
+  const candidates = [];
+  const addCandidate = (url) => {
+    if (typeof url === "string" && url.trim()) {
+      const normalized = url.trim();
+      if (!candidates.includes(normalized)) {
+        candidates.push(normalized);
+      }
+    }
+  };
+
+  addCandidate(service?.icon);
+
+  const templateHost = service?.template?.match(/^https?:\/\/([^/]+)/i)?.[1];
+  if (templateHost) {
+    const normalizedHost = templateHost.replace(/^www\./i, "");
+    addCandidate(`https://www.google.com/s2/favicons?sz=24&domain_url=https://${normalizedHost}`);
+    addCandidate(`https://icons.duckduckgo.com/ip3/${normalizedHost}.ico`);
+  }
+
+  const name = service?.name?.toLowerCase() || "";
+  if (name.includes("linkedin")) {
+    addCandidate("https://www.google.com/s2/favicons?sz=24&domain_url=https://www.linkedin.com");
+  }
+  if (name.includes("threads")) {
+    addCandidate("https://www.google.com/s2/favicons?sz=24&domain_url=https://www.threads.net");
+  }
+  if (name.includes("mastodon")) {
+    addCandidate("https://www.google.com/s2/favicons?sz=24&domain_url=https://mastodon.social");
+  }
+  if (name.includes("perplexity")) {
+    addCandidate("https://www.google.com/s2/favicons?sz=24&domain_url=https://www.perplexity.ai");
+  }
+  if (name.includes("notion")) {
+    addCandidate("https://www.google.com/s2/favicons?sz=24&domain_url=https://www.notion.so");
+  }
+  if (name.includes("wolfram")) {
+    addCandidate("https://www.google.com/s2/favicons?sz=24&domain_url=https://www.wolframalpha.com");
+  }
+
+  return candidates;
+};
+
+const setServiceIcon = (img, service) => {
+  const candidates = getIconCandidates(service);
+  if (!candidates.length) {
+    img.src = iconPlaceholder;
+    return;
+  }
+
+  let currentIndex = 0;
+  const tryNextIcon = () => {
+    if (currentIndex >= candidates.length) {
+      img.src = iconPlaceholder;
+      img.onerror = null;
+      return;
+    }
+
+    const nextUrl = candidates[currentIndex++];
+    img.src = nextUrl;
+    img.onerror = () => {
+      img.onerror = null;
+      tryNextIcon();
+    };
+  };
+
+  tryNextIcon();
+};
 
 const allServices = (window.sections || sections).flatMap((section) =>
   section.forms.map((form) => ({
@@ -81,6 +158,133 @@ const applyThemePreference = (preference) => {
   document.body.classList.toggle("light-theme", !isDark);
 };
 
+const formatClockValue = (value) => String(value).padStart(2, "0");
+
+const formatHour = (hour) => {
+  const normalized = hour % 12;
+  return normalized === 0 ? 12 : normalized;
+};
+
+const updateClock = () => {
+  if (!clockElement) return;
+  const now = new Date();
+  const hours = formatClockValue(formatHour(now.getHours()));
+  const minutes = formatClockValue(now.getMinutes());
+  const ampm = now.getHours() >= 12 ? "PM" : "AM";
+  clockElement.textContent = `${hours}:${minutes} ${ampm}`;
+  if (clockDescription) {
+    clockDescription.textContent = now.toLocaleDateString(undefined, {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
+  }
+};
+
+const loadTodoItems = () => {
+  try {
+    const stored = localStorage.getItem(todoStorageKey);
+    const parsed = stored ? JSON.parse(stored) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveTodoItems = (items) => {
+  try {
+    localStorage.setItem(todoStorageKey, JSON.stringify(items));
+  } catch {
+    // ignore write failures
+  }
+};
+
+const renderTodoList = () => {
+  if (!todoListElement || !todoEmptyMessage) return;
+  const items = loadTodoItems();
+  todoListElement.innerHTML = "";
+  if (!items.length) {
+    todoEmptyMessage.classList.remove("hidden");
+    return;
+  }
+  todoEmptyMessage.classList.add("hidden");
+
+  items.forEach((item) => {
+    const task = document.createElement("li");
+    task.className = "todo-item flex items-center justify-between gap-3 rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900";
+    if (item.completed) {
+      task.classList.add("completed");
+    }
+
+    const label = document.createElement("label");
+    label.className = "flex items-center gap-3 flex-1 cursor-pointer";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = item.completed;
+    checkbox.className = "todo-checkbox h-4 w-4 rounded border-slate-300 text-slate-900";
+    checkbox.addEventListener("change", () => toggleTodoComplete(item.id));
+
+    const text = document.createElement("span");
+    text.textContent = item.text;
+    text.className = "todo-text break-words";
+    if (item.completed) {
+      text.style.textDecoration = "line-through";
+      text.style.opacity = "0.7";
+    }
+
+    label.appendChild(checkbox);
+    label.appendChild(text);
+
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.className = "todo-remove text-slate-500 hover:text-slate-900 transition";
+    removeButton.textContent = "Remove";
+    removeButton.addEventListener("click", () => removeTodoItem(item.id));
+
+    task.appendChild(label);
+    task.appendChild(removeButton);
+    todoListElement.appendChild(task);
+  });
+};
+
+const addTodoItem = (text) => {
+  const trimmed = text.trim();
+  if (!trimmed) return;
+  const items = loadTodoItems();
+  const newItem = {
+    id: `todo-${Date.now()}`,
+    text: trimmed,
+    completed: false,
+  };
+  saveTodoItems([newItem, ...items]);
+  renderTodoList();
+};
+
+const toggleTodoComplete = (id) => {
+  const items = loadTodoItems().map((item) =>
+    item.id === id ? { ...item, completed: !item.completed } : item
+  );
+  saveTodoItems(items);
+  renderTodoList();
+};
+
+const removeTodoItem = (id) => {
+  const items = loadTodoItems().filter((item) => item.id !== id);
+  saveTodoItems(items);
+  renderTodoList();
+};
+
+const setupTodoListeners = () => {
+  if (!todoForm || !todoInput) return;
+  todoForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    addTodoItem(todoInput.value);
+    todoInput.value = "";
+    todoInput.focus();
+  });
+};
+
 const renderThemeSelection = () => {
   const preference = loadThemePreference();
   document.querySelectorAll('button[data-theme]').forEach((btn) => {
@@ -143,16 +347,9 @@ const renderDefaultServiceIndicator = () => {
   defaultServiceIndicator.title = `Default search: ${service.name}`;
   defaultServiceIndicator.setAttribute("aria-label", `Default search engine: ${service.name}`);
 
-  defaultServiceIcon.src = service.icon;
   defaultServiceIcon.alt = `${service.name} icon`;
-  defaultServiceIcon.onerror = () => {
-    try {
-      const fallbackUrl = new URL(service.template.replace("{q}", "x")).hostname;
-      defaultServiceIcon.src = `https://icons.duckduckgo.com/ip3/${fallbackUrl}.ico`;
-    } catch {
-      // keep original if fallback fails
-    }
-  };
+  defaultServiceIcon.loading = "lazy";
+  setServiceIcon(defaultServiceIcon, service);
 };
 
 const buildSearchUrl = (template, query) => template.replace("{q}", encodeURIComponent(query));
@@ -163,6 +360,7 @@ const openService = (service) => {
     globalInput.focus();
     return;
   }
+  updateClock();
   const url = buildSearchUrl(service.template, q);
   window.open(url, "_blank");
 };
@@ -190,17 +388,10 @@ const createFavoriteButton = (service, isDefault) => {
   btn.addEventListener("click", () => openService(service));
 
   const img = document.createElement("img");
-  img.src = service.icon;
   img.alt = `${service.name} icon`;
   img.className = "h-5 w-5 object-contain";
-  img.onerror = () => {
-    try {
-      const fallbackUrl = new URL(service.template.replace("{q}", "x")).hostname;
-      img.src = `https://icons.duckduckgo.com/ip3/${fallbackUrl}.ico`;
-    } catch {
-      // keep original if fallback fails
-    }
-  };
+  img.loading = "lazy";
+  setServiceIcon(img, service);
 
   const label = document.createElement("span");
   label.textContent = service.name;
@@ -220,17 +411,10 @@ const createCategoryChip = (service) => {
   button.addEventListener("click", () => openService(service));
 
   const img = document.createElement("img");
-  img.src = service.icon;
   img.alt = `${service.name} icon`;
   img.className = "h-4 w-4 object-contain";
-  img.onerror = () => {
-    try {
-      const fallbackUrl = new URL(service.template.replace("{q}", "x")).hostname;
-      img.src = `https://icons.duckduckgo.com/ip3/${fallbackUrl}.ico`;
-    } catch {
-      // keep original if fallback fails
-    }
-  };
+  img.loading = "lazy";
+  setServiceIcon(img, service);
 
   const label = document.createElement("span");
   label.textContent = service.name;
@@ -374,11 +558,10 @@ const renderDefaultServicePicker = () => {
       }
 
       const img = document.createElement("img");
-      img.src = service.icon;
       img.alt = service.name;
-      img.onerror = () => {
-        img.src = `https://icons.duckduckgo.com/ip3/${new URL(service.template).hostname}.ico`;
-      };
+      img.className = "h-5 w-5 object-contain";
+      img.loading = "lazy";
+      setServiceIcon(img, service);
 
       const label = document.createElement("span");
       label.textContent = service.name;
@@ -438,7 +621,7 @@ const setupModalListeners = () => {
   }
 
   document.querySelectorAll('button[data-theme]').forEach((btn) => {
-    btn.addEventListener('click', (event) => {
+    btn.addEventListener('click', () => {
       setThemePreference(btn.dataset.theme);
     });
   });
@@ -456,7 +639,6 @@ const setupModalListeners = () => {
     layoutToggleBtn.addEventListener('click', toggleLayoutView);
   }
 
-  // Close on Escape key
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       closeModal();
@@ -471,6 +653,10 @@ const init = () => {
   applyLayoutPreference(getLayoutPreference());
   renderFavorites();
   setupModalListeners();
+  setupTodoListeners();
+  renderTodoList();
+  updateClock();
+  setInterval(updateClock, 1000);
 
   if (defaultServiceIndicator) {
     defaultServiceIndicator.addEventListener("click", () => {

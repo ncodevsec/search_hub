@@ -71,7 +71,7 @@ const sections = [
 			{
 				name: "Perplexity",
 				template: "https://www.perplexity.ai/search?q={q}",
-				icon: "https://www.perplexity.ai/favicon.ico",
+				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://www.perplexity.ai",
 			},
 			{
 				name: "You.com",
@@ -89,7 +89,7 @@ const sections = [
 				icon: "https://www.google.com/s2/favicons?domain_url=https://gemini.google.com",
 			},
 			{
-				name: "MS Copilot",
+				name: "Microsoft Copilot",
 				template: "https://copilot.microsoft.com/?q={q}",
 				icon: "https://www.google.com/s2/favicons?domain_url=https://copilot.microsoft.com",
 			},
@@ -141,17 +141,17 @@ const sections = [
 			{
 				name: "LinkedIn",
 				template: "https://www.linkedin.com/search/results/all/?keywords={q}",
-				icon: "https://www.linkedin.com/favicon.ico",
+				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://www.linkedin.com",
 			},
 			{
 				name: "Threads",
 				template: "https://www.threads.net/search?q={q}",
-				icon: "https://www.threads.net/favicon.ico",
+				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://www.threads.net",
 			},
 			{
 				name: "Mastodon",
 				template: "https://mastodon.social/search?q={q}",
-				icon: "https://mastodon.social/favicon.ico",
+				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://mastodon.social",
 			},
 			{
 				name: "Telegram",
@@ -174,7 +174,7 @@ const sections = [
 				icon: "https://www.startpage.com/favicon.ico",
 			},
 			{
-				name: "Brave Search",
+				name: "BraveSearch",
 				template: "https://search.brave.com/search?q={q}",
 				icon: "https://icons.duckduckgo.com/ip3/search.brave.com.ico",
 			},
@@ -251,7 +251,7 @@ const sections = [
 			{
 				name: "Notion",
 				template: "https://www.notion.so/search?q={q}",
-				icon: "https://www.notion.so/icons/icon-48x48.png",
+				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://www.notion.so",
 			},
 		],
 	},
@@ -314,12 +314,12 @@ const sections = [
 				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=scholar.google.com",
 			},
 			{
-				name: "WolframAlpha",
+				name: "Wolfram Alpha",
 				template: "https://www.wolframalpha.com/input/?i={q}",
-				icon: "https://www.wolframalpha.com/favicon.ico",
+				icon: "https://www.google.com/s2/favicons?sz=24&domain_url=https://www.wolframalpha.com",
 			},
 			{
-				name: "OpenStreetMap",
+				name: "Open Street Map",
 				template: "https://www.openstreetmap.org/search?query={q}",
 				icon: "https://www.openstreetmap.org/favicon.ico",
 			},

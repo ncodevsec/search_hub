@@ -355,3 +355,40 @@ body.dark-theme #reset-theme-btn {
 
 body.dark-theme #reset-theme-btn:hover {
 	background-color: #991b1b !important;
+}
+
+.todo-item.completed .todo-text {
+	text-decoration: line-through;
+	opacity: 0.7;
+}
+
+.todo-checkbox {
+	accent-color: #2563eb;
+}
+
+.todo-remove {
+	border: none;
+	background: transparent;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #64748b;
+	cursor: pointer;
+}
+
+.todo-remove:hover {
+	color: #0f172a;
+}
+
+body.dark-theme .todo-item,
+body.dark-theme .todo-remove {
+	color: #d2d2d2 !important;
+}
+
+body.dark-theme .todo-item {
+	background: #111827 !important;
+	border-color: #2d3748 !important;
+}
+
+body.dark-theme .todo-checkbox {
+	accent-color: #60a5fa;
+}
