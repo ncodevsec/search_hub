@@ -392,3 +392,71 @@ body.dark-theme .todo-item {
 body.dark-theme .todo-checkbox {
 	accent-color: #60a5fa;
 }
+/* Accordion/Toggle styles for category services */
+.category-toggle-btn {
+	border: 1px solid #cbd5e1;
+	background-color: #f8fafc;
+	color: #475569;
+	font-size: 0.875rem;
+	padding: 0.625rem 0.75rem;
+	border-radius: 9999px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	font-weight: 500;
+}
+
+.category-toggle-btn:hover {
+	background-color: #f1f5f9;
+	color: #1e293b;
+	border-color: #a1a1a1;
+}
+
+.category-toggle-btn:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+}
+
+.toggle-icon {
+	width: 1rem;
+	height: 1rem;
+	transition: transform 0.3s ease;
+	flex-shrink: 0;
+}
+
+.hidden-services-container {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease;
+}
+
+.hidden-services-container:not(.hidden) {
+	max-height: 2000px;
+	animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		max-height: 0;
+	}
+	to {
+		opacity: 1;
+		max-height: 2000px;
+	}
+}
+
+body.dark-theme .category-toggle-btn {
+	background-color: #1f2937;
+	border-color: #374151;
+	color: #d1d5db;
+}
+
+body.dark-theme .category-toggle-btn:hover {
+	background-color: #2d3748;
+	color: #f3f4f6;
+	border-color: #4b5563;
+}

@@ -483,14 +483,87 @@ const renderCategories = () => {
 
     const categoryRow = document.createElement("div");
     categoryRow.className = layout === "horizontal" ? "flex flex-wrap gap-2 justify-center" : "flex flex-col gap-2";
-    section.forms.forEach((form) => {
-      const service = allServices.find((svc) => svc.id === `${section.title}:${form.name}`);
-      if (service) {
-        categoryRow.appendChild(createCategoryChip(service));
-      }
+    categoryRow.id = `category-row-${idx}`;
+
+    const services = section.forms.map((form) => {
+      return allServices.find((svc) => svc.id === `${section.title}:${form.name}`);
+    }).filter(Boolean);
+
+    // In vertical mode, show only first 5 services and hide the rest
+    const isVertical = layout !== "horizontal";
+    const visibleServices = isVertical ? services.slice(0, 4) : services;
+    const hiddenServices = isVertical ? services.slice(4) : [];
+
+    visibleServices.forEach((service) => {
+      categoryRow.appendChild(createCategoryChip(service));
     });
 
-    categorySection.appendChild(categoryRow);
+    // Create a wrapper for all services and toggle button
+    const servicesWrapper = document.createElement("div");
+    servicesWrapper.className = "flex flex-col gap-2 w-full";
+
+    servicesWrapper.appendChild(categoryRow);
+
+    // Add accordion toggle and hidden services container for vertical mode
+    if (isVertical && hiddenServices.length > 0) {
+      // Create hidden services container
+      const hiddenServicesContainer = document.createElement("div");
+      hiddenServicesContainer.className = "hidden-services-container hidden flex flex-col gap-2";
+      hiddenServicesContainer.id = `hidden-services-${idx}`;
+
+      hiddenServices.forEach((service) => {
+        hiddenServicesContainer.appendChild(createCategoryChip(service));
+      });
+
+      servicesWrapper.appendChild(hiddenServicesContainer);
+
+      // Create toggle button
+      const toggleButton = document.createElement("button");
+      toggleButton.type = "button";
+      toggleButton.className = "category-toggle-btn w-full px-3 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-full border border-slate-200 transition-all flex items-center justify-center gap-2";
+      toggleButton.setAttribute("aria-expanded", "false");
+      toggleButton.setAttribute("data-category", idx);
+
+      // Create SVG icon with proper namespace
+      const svgNS = "http://www.w3.org/2000/svg";
+      const toggleIcon = document.createElementNS(svgNS, "svg");
+      toggleIcon.setAttribute("class", "toggle-icon h-4 w-4 transition-transform");
+      toggleIcon.setAttribute("viewBox", "0 0 24 24");
+      toggleIcon.setAttribute("fill", "none");
+      toggleIcon.setAttribute("stroke", "currentColor");
+      toggleIcon.setAttribute("stroke-width", "2");
+      toggleIcon.setAttribute("stroke-linecap", "round");
+      toggleIcon.setAttribute("stroke-linejoin", "round");
+
+      const path = document.createElementNS(svgNS, "path");
+      path.setAttribute("d", "M19 14l-7 7m0 0l-7-7m7 7V3");
+      toggleIcon.appendChild(path);
+
+      toggleButton.appendChild(toggleIcon);
+      toggleButton.appendChild(document.createTextNode(`Show ${hiddenServices.length} more`));
+
+      servicesWrapper.appendChild(toggleButton);
+
+      // Add toggle event listener
+      toggleButton.addEventListener("click", () => {
+        const isExpanded = toggleButton.getAttribute("aria-expanded") === "true";
+        toggleButton.setAttribute("aria-expanded", !isExpanded);
+        hiddenServicesContainer.classList.toggle("hidden");
+
+        const toggleIconSvg = toggleButton.querySelector(".toggle-icon");
+        const textNode = Array.from(toggleButton.childNodes).find(node => node.nodeType === 3);
+
+        if (!isExpanded) {
+          toggleIconSvg.style.transform = "rotate(180deg)";
+          if (textNode) textNode.textContent = `Show less`;
+        } else {
+          toggleIconSvg.style.transform = "rotate(0deg)";
+          if (textNode) textNode.textContent = `Show ${hiddenServices.length} more`;
+        }
+      });
+    }
+
+    categorySection.appendChild(servicesWrapper);
     categoriesContainer.appendChild(categorySection);
   });
 };
